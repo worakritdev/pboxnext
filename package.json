@@ -1,0 +1,12 @@
+{
+  "name": "pboxnext",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "serve":"yarn --cwd server start"
+  },
+  "keywords": [],
+  "author": "worakrit",
+  "license": "ISC"
+}
