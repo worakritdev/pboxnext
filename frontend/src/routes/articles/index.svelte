@@ -1,9 +1,9 @@
 <script context="module">
-  import { post } from "$lib/api";
-  import { API } from "$lib/Env";
+  //import { post } from "$lib/api";
+  //import { API } from "$lib/Env";
 
   export async function load({ fetch }) {
-    const res = await fetch("http://localhost:1337/graphql", {
+    const res = await fetch("/api", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -12,6 +12,7 @@
     id
     title
     content
+    slug
   }
 }`,
       }),
@@ -21,6 +22,11 @@
     } = await res.json();
     return { props: { articles: articles } };
   }
+
+
+  function refCtrl(){
+    
+  }
 </script>
 
 <script>
@@ -28,7 +34,7 @@
 </script>
 
 {#each articles as article}
-  <a href="/articles/{article.id}">
+  <a href="/articles/{article.slug}" on:click={refCtrl}>
     <p>
       {article.title}
     </p>

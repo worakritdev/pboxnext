@@ -1,7 +1,7 @@
 <script>
-  let username, password, email;
-  import Box from "$lib/components/Box.svelte";
-  import { jwt, user } from "$lib/userStores";
+  let username, password;
+  //  email;
+  import { jwt, user } from "$lib/utils/userStores";
 
   async function Resigter() {
     const API = import.meta.env.VITE_AUTH_DMSX;

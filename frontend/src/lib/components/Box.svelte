@@ -1,18 +1,112 @@
+<script context="module">
+  export function pannable(node) {
+    let x;
+    let y;
+
+    function handleMousedown(event) {
+      x = event.clientX;
+      y = event.clientY;
+
+      node.dispatchEvent(
+        new CustomEvent("panstart", {
+          detail: { x, y },
+        })
+      );
+
+      window.addEventListener("mousemove", handleMousemove);
+      window.addEventListener("mouseup", handleMouseup);
+    }
+
+    function handleMousemove(event) {
+      const dx = event.clientX - x;
+      const dy = event.clientY - y;
+      x = event.clientX;
+      y = event.clientY;
+
+      node.dispatchEvent(
+        new CustomEvent("panmove", {
+          detail: { x, y, dx, dy },
+        })
+      );
+    }
+
+    function handleMouseup(event) {
+      x = event.clientX;
+      y = event.clientY;
+
+      node.dispatchEvent(
+        new CustomEvent("panend", {
+          detail: { x, y },
+        })
+      );
+
+      window.removeEventListener("mousemove", handleMousemove);
+      window.removeEventListener("mouseup", handleMouseup);
+    }
+
+    node.addEventListener("mousedown", handleMousedown);
+
+    return {
+      destroy() {
+        node.removeEventListener("mousedown", handleMousedown);
+      },
+    };
+  }
+</script>
+
 <script>
-    // your script goes here
+  import { spring } from "svelte/motion";
+
+  const coords = spring(
+    { x: 0, y: 0 },
+    {
+      stiffness: 0.2,
+      damping: 0.4,
+    }
+  );
+
+  function handlePanStart() {
+    coords.stiffness = coords.damping = 1;
+  }
+
+  function handlePanMove(event) {
+    coords.update(($coords) => ({
+      x: $coords.x + event.detail.dx,
+      y: $coords.y + event.detail.dy,
+    }));
+  }
+
+  function handlePanEnd(event) {
+    coords.stiffness = 0.2;
+    coords.damping = 0.4;
+    coords.set({ x: 0, y: 0 });
+  }
 </script>
 
 <div
-    class="border border-blue-600 shadow rounded-md p-4 max-w-sm w-full mx-auto"
+  class="box animate-pulse select-none bg-gradient-to-t from-indigo-500 to-indigo-800"
+  use:pannable
+  on:panstart="{handlePanStart}"
+  on:panmove="{handlePanMove}"
+  on:panend="{handlePanEnd}"
+  style="transform:
+		translate({$coords.x}px,{$coords.y}px)
+		rotate({$coords.x * 0.2}deg)"
 >
-    <div class="flex space-x-4">
-        <div class="rounded-full bg-blue-400 h-12 w-12"></div>
-        <div class="flex-1 space-y-4">
-            <slot><!-- optional fallback --></slot>
-        </div>
-    </div>
+  <slot><!-- optional fallback --></slot>
 </div>
 
 <style>
-    /* your styles go here */
+  .box {
+    --width: 100px;
+    --height: 100px;
+    position: absolute;
+    width: var(--width);
+    height: var(--height);
+    left: calc(80% - var(--width) / 2);
+    top: calc(80% - var(--height) / 2);
+    border-radius: 4px;
+    background-color: #7a6bcf;
+    cursor: move;
+  }
 </style>

@@ -1,7 +1,8 @@
 import type { EndpointOutput, RequestHandler } from '@sveltejs/kit';
 import { ApolloServer, gql } from 'apollo-server-lambda';
-import db from '$lib/database/db'
+import connectDB from "$lib/database/db";
 
+connectDB()
 
 const typeDefs = gql`
     type Query {
@@ -18,7 +19,7 @@ const resolvers = {
         hello: () => 'Hello world!'
     },
     Mutation: {
-        double: (_, { x }) => x * 2
+        double: (_:number, { x }) => x * 2
     }
 };
 

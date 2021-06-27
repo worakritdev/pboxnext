@@ -1,5 +1,5 @@
 <script>
-  export let title, content, body, author, comments, categories;
+  export let title, content;
 </script>
 
 <header>

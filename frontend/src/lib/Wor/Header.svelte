@@ -1,31 +1,13 @@
-<script context="module">
-  export async function load({ fetch }) {
-    const res = await fetch("http://localhost:5000/blogs");
-
-    const blogs = await res.json();
-    // console.log(blogs);
-    return { props: { blogs: blogs } };
-  }
-</script>
-
 <script>
-  import Header from "$lib/Wor/Header.svelte";
-
-  import SearchMenu from "$lib/components/SearchMenu.svelte";
-  import "../app.postcss";
-  import Box from "$lib/components/Box.svelte";
-  export let blogs;
 </script>
 
-<Header />
-<main>
-  <SearchMenu blogs="{blogs}" />
-
-  <slot />
-  <Box>
-    {blogs.length}
+<header
+  class="flex justify-between first-letter:font-bold shadow-lg p-4 mx-auto"
+>
+  <a href="home"> <p>Pbox</p></a>
+  <div class=" flex-1 place-items-start">
     <svg
-      class="h-20 w-20 text-indigo-600"
+      class="h-8 w-8 text-blue-900"
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
@@ -41,8 +23,17 @@
       <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
       <line x1="12" y1="22.08" x2="12" y2="12"></line></svg
     >
-  </Box>
-</main>
+  </div>
+  <div class="flex flex-1 justify-around">
+    <a href="/">Home</a>
+    <a href="/articles">Articles</a>
+    <a href="/auth">Profile</a>
+  </div>
+</header>
+้
 
-<style>
+<style lang="postcss">
+  header {
+    @apply bg-purple-300 text-lg font-mono;
+  }
 </style>

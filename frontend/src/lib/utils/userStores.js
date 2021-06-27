@@ -19,3 +19,15 @@ if (browser) {
     jwt.subscribe((value) => { localStorage.setItem("jwt", JSON.stringify(value) || '') })
 
 }
+
+
+export const searchlist = writable([])
+export const filterStore = writable([])
+const BASEAPI = import.meta.env.VITE_FASTIFY;
+export async function setSearchList() {
+    const res = await fetch(`${BASEAPI}/blogs`)
+    searchlist.set(await res.json());
+
+}
+
+setSearchList()

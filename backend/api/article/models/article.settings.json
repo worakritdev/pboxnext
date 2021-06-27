@@ -8,7 +8,7 @@
   "options": {
     "increments": true,
     "timestamps": true,
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -22,11 +22,6 @@
     },
     "content": {
       "type": "richtext",
-      "required": true
-    },
-    "slug": {
-      "type": "uid",
-      "targetField": "title",
       "required": true
     },
     "category": {
@@ -48,6 +43,9 @@
     "author": {
       "via": "articles",
       "model": "writer"
+    },
+    "slug": {
+      "type": "uid"
     }
   }
 }

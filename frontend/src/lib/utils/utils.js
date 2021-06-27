@@ -1,4 +1,4 @@
-export function post(endpoint, data) {
+export async function post(endpoint, data) {
 	return fetch(endpoint, {
 		method: 'POST',
 		credentials: 'include',
@@ -8,3 +8,8 @@ export function post(endpoint, data) {
 		}
 	}).then((r) => r.json());
 }
+
+
+
+
+

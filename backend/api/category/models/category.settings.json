@@ -21,6 +21,10 @@
     "articles": {
       "via": "category",
       "collection": "article"
+    },
+    "blogs": {
+      "via": "categories",
+      "collection": "blog"
     }
   }
 }

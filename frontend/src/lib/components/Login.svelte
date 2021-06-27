@@ -1,7 +1,6 @@
 <script>
-  let username, password, email;
-  import Box from "$lib/components/Box.svelte";
-  import { jwt, profile, user } from "$lib/userStores";
+  let username, password;
+  import { jwt, profile, user } from "$lib/utils/userStores";
 
   async function Login() {
     const API = import.meta.env.VITE_AUTH_DMSX;
